@@ -41,8 +41,7 @@ jobs:
 
       - name: Set Artifact Name
         id: set-artifact-name
-        run: echo "artifact_name=$(echo "windows-${{ matrix.configuration }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-        shell: bash
+        run: echo "artifact_name=$(echo "windows-${{ matrix.configuration }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Publish Artifacts
         uses: actions/upload-artifact@v3
@@ -103,70 +102,70 @@ jobs:
           name: linux-ubuntu-22.04-appimage
           path: dolphin-memory-engine.AppImage
 
-build-macos-intel:
-  runs-on: macos-12
-  name: 🍎 macOS x86_64
+  build-macos-intel:
+    runs-on: macos-12
+    name: 🍎 macOS x86_64
   
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Install Dependencies
-      run: |
-        brew install qt@6 cmake
-        export PATH="$(brew --prefix qt@6):$PATH
-      shell: bash
+      - name: Install Dependencies
+        run: |
+          brew install qt@6 cmake
+          export PATH="$(brew --prefix qt@6):$PATH"
+        shell: bash
 
-    - name: Build
-      run: |
-        cmake Source -B Source/build -DCMAKE_BUILD_TYPE=Release
-        cmake --build Source/build --parallel
-      shell: bash
+      - name: Build
+        run: |
+          cmake Source -B Source/build -DCMAKE_BUILD_TYPE=Release
+          cmake --build Source/build --parallel
+        shell: bash
       
-    - name: Copy LICENSE, README, Prepare Artifacts
-      run: |
-        mkdir Source/build/artifacts
-        cp ./README.md ./Source/build/artifacts/
-        cp ./LICENSE ./Source/build/artifacts/
-        cp ./Source/build/dolphin-memory-engine ./Source/build/artifacts/
-      shell: bash
+      - name: Copy LICENSE, README, Prepare Artifacts
+        run: |
+          mkdir Source/build/artifacts
+          cp ./README.md ./Source/build/artifacts/
+          cp ./LICENSE ./Source/build/artifacts/
+          cp ./Source/build/dolphin-memory-engine ./Source/build/artifacts/
+        shell: bash
       
-    - name: Publish Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: macOS-12.0
-        path: Source/build/artifacts
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: macOS-12.0
+          path: Source/build/artifacts
 
-build-macos-mx:
-  runs-on: macos-12
-  name: 🍎 macOS ARM64
+  build-macos-mx:
+    runs-on: macos-12
+    name: 🍎 macOS ARM64
   
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Install Dependencies
-      run: |
-        brew install qt@6 cmake
-        export PATH="$(brew --prefix qt@6):$PATH
-      shell: bash
+      - name: Install Dependencies
+        run: |
+          brew install qt@6 cmake
+          export PATH="$(brew --prefix qt@6):$PATH"
+        shell: bash
 
-    - name: Build
-      run: |
-        cmake Source -B Source/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} -target arm64-apple-macos11" -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -target arm64-apple-macos11"
-        cmake --build Source/build --parallel
-      shell: bash
+      - name: Build
+        run: |
+          cmake Source -B Source/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} -target arm64-apple-macos11" -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -target arm64-apple-macos11"
+          cmake --build Source/build --parallel
+        shell: bash
       
-    - name: Copy LICENSE, README, Prepare Artifacts
-      run: |
-        mkdir Source/build/artifacts
-        cp ./README.md ./Source/build/artifacts/
-        cp ./LICENSE ./Source/build/artifacts/
-        cp ./Source/build/dolphin-memory-engine ./Source/build/artifacts/
-      shell: bash
+      - name: Copy LICENSE, README, Prepare Artifacts
+        run: |
+          mkdir Source/build/artifacts
+          cp ./README.md ./Source/build/artifacts/
+          cp ./LICENSE ./Source/build/artifacts/
+          cp ./Source/build/dolphin-memory-engine ./Source/build/artifacts/
+        shell: bash
       
-    - name: Publish Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: macOS-12.0
-        path: Source/build/artifacts
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: macOS-12.0
+          path: Source/build/artifacts
