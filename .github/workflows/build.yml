@@ -146,7 +146,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          brew install qt@6 ninja
+          brew install qt@6 ninja llvm
           export PATH="$(brew --prefix qt@6):$PATH"
         shell: bash
 
@@ -154,7 +154,11 @@ jobs:
         run: |
           mkdir Source/build
           cd Source/build
-          cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} -target arm64-apple-macos11" -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -target arm64-apple-macos11"
+          CC=$(brew --prefix llvm)/bin/clang -target arm64-apple-macos11
+          CXX=$(brew --prefix llvm)/bin/clang++ -target arm64-apple-macos11
+          OBJC=$(brew --prefix llvm)/bin/clang -target arm64-apple-macos11
+          OBJCXX=$(brew --prefix llvm)/bin/clang++ -target arm64-apple-macos11
+          cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release
           ninja
         shell: bash
       
