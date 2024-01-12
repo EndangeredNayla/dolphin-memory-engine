@@ -102,9 +102,9 @@ jobs:
           name: linux-ubuntu-22.04-appimage
           path: dolphin-memory-engine.AppImage
 
-  build-macos-arm64:
-    runs-on: macos-13-arm64
-    name: 🍎 macOS Universal
+  build-macos-intel:
+    runs-on: macos-13
+    name: 🍎 macOS Intel
   
     steps:
       - name: Checkout code
@@ -135,5 +135,5 @@ jobs:
       - name: Publish Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: macOS-universal
+          name: macOS-intel
           path: Source/build/artifacts
