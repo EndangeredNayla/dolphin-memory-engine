@@ -24,10 +24,10 @@ bool WindowsDolphinProcess::findPID()
     {
 #ifdef UNICODE
       const std::wstring exeFile{entry.szExeFile};
-      if (exeFile == L"Dolphin.exe" || exeFile == L"DolphinQt2.exe" || exeFile == L"DolphinWx.exe")
+      if (exeFile == L"Dolphin.exe" || exeFile == L"DolphinQt2.exe" || exeFile == L"DolphinWx.exe" || exeFile == L"Dolphin-MPN.exe")
 #else
       const std::string exeFile{entry.szExeFile};
-      if (exeFile == "Dolphin.exe" || exeFile == "DolphinQt2.exe" || exeFile == "DolphinWx.exe")
+      if (exeFile == "Dolphin.exe" || exeFile == "DolphinQt2.exe" || exeFile == "DolphinWx.exe" || exeFile == L"Dolphin-MPN.exe")
 #endif
       {
         m_PID = entry.th32ProcessID;
